@@ -1,0 +1,820 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="oficinaModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cliente">
+          <Key>
+            <PropertyRef Name="idcliente" />
+            <PropertyRef Name="idusuario" />
+          </Key>
+          <Property Name="idcliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idusuario" Type="int" Nullable="false" />
+          <Property Name="divida" Type="double" />
+        </EntityType>
+        <EntityType Name="contato">
+          <Key>
+            <PropertyRef Name="idcontato" />
+          </Key>
+          <Property Name="idcontato" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idfornecedor" Type="int" />
+          <Property Name="idusuario" Type="int" />
+          <Property Name="numero_telefone" Type="varchar" MaxLength="20" />
+          <Property Name="email" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="endereco">
+          <Key>
+            <PropertyRef Name="idendereco" />
+          </Key>
+          <Property Name="idendereco" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idfornecedor" Type="int" />
+          <Property Name="idusuario" Type="int" />
+          <Property Name="logradouro" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="bairro" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="cidade" Type="varchar" MaxLength="45" />
+          <Property Name="uf" Type="varchar" MaxLength="2" />
+          <Property Name="cep" Type="varchar" MaxLength="15" />
+          <Property Name="numero" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="estoque">
+          <Key>
+            <PropertyRef Name="idestoque" />
+          </Key>
+          <Property Name="idestoque" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="qtd_estoque" Type="int" />
+        </EntityType>
+        <EntityType Name="fornecedor">
+          <Key>
+            <PropertyRef Name="idfornecedor" />
+          </Key>
+          <Property Name="idfornecedor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="CNPJ" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="representante" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="funcionario">
+          <Key>
+            <PropertyRef Name="idfuncionario" />
+            <PropertyRef Name="idusuario" />
+          </Key>
+          <Property Name="idfuncionario" Type="int" Nullable="false" />
+          <Property Name="idusuario" Type="int" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="senha" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="cargo" Type="varchar" MaxLength="45" />
+          <Property Name="nivel_acesso" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="itens_vendidos">
+          <Key>
+            <PropertyRef Name="itemvendido" />
+            <PropertyRef Name="venda_idvenda" />
+          </Key>
+          <Property Name="itemvendido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="venda_idvenda" Type="int" Nullable="false" />
+          <Property Name="qtd" Type="int" />
+          <Property Name="preco_venda" Type="double" />
+          <Property Name="desconto" Type="double" />
+          <Property Name="codigo_barras" Type="varchar" MaxLength="45" />
+          <Property Name="descricao" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="mecanico">
+          <Key>
+            <PropertyRef Name="idmecanico" />
+            <PropertyRef Name="usuario_idusuario" />
+          </Key>
+          <Property Name="idmecanico" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usuario_idusuario" Type="int" Nullable="false" />
+          <Property Name="apelido" Type="varchar" MaxLength="30" />
+          <Property Name="funcao" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="produto">
+          <Key>
+            <PropertyRef Name="idproduto" />
+            <PropertyRef Name="idfornecedor" />
+            <PropertyRef Name="estoque_idestoque" />
+          </Key>
+          <Property Name="idproduto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idfornecedor" Type="int" Nullable="false" />
+          <Property Name="estoque_idestoque" Type="int" Nullable="false" />
+          <Property Name="estado" Type="varchar" MaxLength="15" />
+          <Property Name="descricao" Type="varchar" MaxLength="45" />
+          <Property Name="un" Type="varchar" MaxLength="15" />
+          <Property Name="descricao_marca" Type="varchar" MaxLength="45" />
+          <Property Name="codigo" Type="varchar" MaxLength="45" />
+          <Property Name="codigo_barras" Type="varchar" MaxLength="45" />
+          <Property Name="valor_custo" Type="double" />
+          <Property Name="margem_avista" Type="double" />
+          <Property Name="valor_avista" Type="double" />
+          <Property Name="margem_prazo" Type="double" />
+          <Property Name="valor_prazo" Type="double" />
+          <Property Name="margem_atacado" Type="double" />
+          <Property Name="valor_atacado" Type="double" />
+          <Property Name="ultima_atualizacao" Type="datetime" Precision="0" />
+          <Property Name="data_cadastro" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="servico">
+          <Key>
+            <PropertyRef Name="idservico" />
+          </Key>
+          <Property Name="idservico" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mecanico_idmecanico" Type="int" Nullable="false" />
+          <Property Name="descricao" Type="varchar" MaxLength="45" />
+          <Property Name="valor" Type="double" />
+          <Property Name="data_servico" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="idusuario" />
+          </Key>
+          <Property Name="idusuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="cpf" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="rg" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="sexo" Type="char" MaxLength="1" />
+          <Property Name="nascimento" Type="varchar" MaxLength="15" />
+          <Property Name="data_cadastro" Type="datetime" Precision="0" />
+          <Property Name="estado" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="venda">
+          <Key>
+            <PropertyRef Name="idvenda" />
+            <PropertyRef Name="cliente_idcliente" />
+          </Key>
+          <Property Name="idvenda" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cliente_idcliente" Type="int" Nullable="false" />
+          <Property Name="funcionario_idfuncionario" Type="int" Nullable="false" />
+          <Property Name="valor_total_compra" Type="double" />
+          <Property Name="data_venda" Type="datetime" Precision="0" />
+          <Property Name="desconto_total" Type="double" />
+          <Property Name="forma_pagamento" Type="varchar" MaxLength="20" />
+          <Property Name="tipo_cliente" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.oficina.view_itens_venda' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="view_itens_venda">
+          <Key>
+            <PropertyRef Name="idvenda" />
+            <PropertyRef Name="cliente_idcliente" />
+            <PropertyRef Name="funcionario_idfuncionario" />
+            <PropertyRef Name="itemvendido" />
+            <PropertyRef Name="venda_idvenda" />
+          </Key>
+          <Property Name="idvenda" Type="int" Nullable="false" />
+          <Property Name="cliente_idcliente" Type="int" Nullable="false" />
+          <Property Name="funcionario_idfuncionario" Type="int" Nullable="false" />
+          <Property Name="valor_total_compra" Type="double" />
+          <Property Name="data_venda" Type="datetime" Precision="0" />
+          <Property Name="desconto_total" Type="double" />
+          <Property Name="forma_pagamento" Type="varchar" MaxLength="20" />
+          <Property Name="tipo_cliente" Type="varchar" MaxLength="20" />
+          <Property Name="itemvendido" Type="int" Nullable="false" />
+          <Property Name="venda_idvenda" Type="int" Nullable="false" />
+          <Property Name="qtd" Type="int" />
+          <Property Name="preco_venda" Type="double" />
+          <Property Name="desconto" Type="double" />
+          <Property Name="codigo_barras" Type="varchar" MaxLength="45" />
+          <Property Name="descricao" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.oficina.view_user' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="view_user">
+          <Key>
+            <PropertyRef Name="idusuario" />
+            <PropertyRef Name="nome" />
+            <PropertyRef Name="cpf" />
+            <PropertyRef Name="rg" />
+            <PropertyRef Name="idendereco" />
+            <PropertyRef Name="logradouro" />
+            <PropertyRef Name="bairro" />
+            <PropertyRef Name="idcontato" />
+          </Key>
+          <Property Name="idusuario" Type="int" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="cpf" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="rg" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="sexo" Type="char" MaxLength="1" />
+          <Property Name="nascimento" Type="varchar" MaxLength="15" />
+          <Property Name="data_cadastro" Type="datetime" Precision="0" />
+          <Property Name="estado" Type="char" MaxLength="1" />
+          <Property Name="idendereco" Type="int" Nullable="false" />
+          <Property Name="logradouro" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="bairro" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="cidade" Type="varchar" MaxLength="45" />
+          <Property Name="uf" Type="varchar" MaxLength="2" />
+          <Property Name="cep" Type="varchar" MaxLength="15" />
+          <Property Name="numero" Type="varchar" MaxLength="10" />
+          <Property Name="idcontato" Type="int" Nullable="false" />
+          <Property Name="numero_telefone" Type="varchar" MaxLength="20" />
+          <Property Name="email" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.oficina.view_venda' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="view_venda">
+          <Key>
+            <PropertyRef Name="idvenda" />
+            <PropertyRef Name="cliente_idcliente" />
+            <PropertyRef Name="funcionario_idfuncionario" />
+            <PropertyRef Name="itemvendido" />
+            <PropertyRef Name="venda_idvenda" />
+            <PropertyRef Name="idcliente" />
+            <PropertyRef Name="idusuario" />
+          </Key>
+          <Property Name="idvenda" Type="int" Nullable="false" />
+          <Property Name="cliente_idcliente" Type="int" Nullable="false" />
+          <Property Name="funcionario_idfuncionario" Type="int" Nullable="false" />
+          <Property Name="valor_total_compra" Type="double" />
+          <Property Name="data_venda" Type="datetime" Precision="0" />
+          <Property Name="desconto_total" Type="double" />
+          <Property Name="forma_pagamento" Type="varchar" MaxLength="20" />
+          <Property Name="tipo_cliente" Type="varchar" MaxLength="20" />
+          <Property Name="itemvendido" Type="int" Nullable="false" />
+          <Property Name="venda_idvenda" Type="int" Nullable="false" />
+          <Property Name="qtd" Type="int" />
+          <Property Name="preco_venda" Type="double" />
+          <Property Name="desconto" Type="double" />
+          <Property Name="codigo_barras" Type="varchar" MaxLength="45" />
+          <Property Name="descricao" Type="varchar" MaxLength="45" />
+          <Property Name="idcliente" Type="int" Nullable="false" />
+          <Property Name="idusuario" Type="int" Nullable="false" />
+          <Property Name="divida" Type="double" />
+        </EntityType>
+        <EntityContainer Name="oficinaModelStoreContainer">
+          <EntitySet Name="cliente" EntityType="Self.cliente" Schema="oficina" store:Type="Tables" />
+          <EntitySet Name="contato" EntityType="Self.contato" Schema="oficina" store:Type="Tables" />
+          <EntitySet Name="endereco" EntityType="Self.endereco" Schema="oficina" store:Type="Tables" />
+          <EntitySet Name="estoque" EntityType="Self.estoque" Schema="oficina" store:Type="Tables" />
+          <EntitySet Name="fornecedor" EntityType="Self.fornecedor" Schema="oficina" store:Type="Tables" />
+          <EntitySet Name="funcionario" EntityType="Self.funcionario" Schema="oficina" store:Type="Tables" />
+          <EntitySet Name="itens_vendidos" EntityType="Self.itens_vendidos" Schema="oficina" store:Type="Tables" />
+          <EntitySet Name="mecanico" EntityType="Self.mecanico" Schema="oficina" store:Type="Tables" />
+          <EntitySet Name="produto" EntityType="Self.produto" Schema="oficina" store:Type="Tables" />
+          <EntitySet Name="servico" EntityType="Self.servico" Schema="oficina" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="oficina" store:Type="Tables" />
+          <EntitySet Name="venda" EntityType="Self.venda" Schema="oficina" store:Type="Tables" />
+          <EntitySet Name="view_itens_venda" EntityType="Self.view_itens_venda" store:Type="Views" store:Schema="oficina">
+            <DefiningQuery>SELECT
+`view_itens_venda`.`idvenda`, 
+`view_itens_venda`.`cliente_idcliente`, 
+`view_itens_venda`.`funcionario_idfuncionario`, 
+`view_itens_venda`.`valor_total_compra`, 
+`view_itens_venda`.`data_venda`, 
+`view_itens_venda`.`desconto_total`, 
+`view_itens_venda`.`forma_pagamento`, 
+`view_itens_venda`.`tipo_cliente`, 
+`view_itens_venda`.`itemvendido`, 
+`view_itens_venda`.`venda_idvenda`, 
+`view_itens_venda`.`qtd`, 
+`view_itens_venda`.`preco_venda`, 
+`view_itens_venda`.`desconto`, 
+`view_itens_venda`.`codigo_barras`, 
+`view_itens_venda`.`descricao`
+FROM `view_itens_venda` AS `view_itens_venda`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="view_user" EntityType="Self.view_user" store:Type="Views" store:Schema="oficina">
+            <DefiningQuery>SELECT
+`view_user`.`idusuario`, 
+`view_user`.`nome`, 
+`view_user`.`cpf`, 
+`view_user`.`rg`, 
+`view_user`.`sexo`, 
+`view_user`.`nascimento`, 
+`view_user`.`data_cadastro`, 
+`view_user`.`estado`, 
+`view_user`.`idendereco`, 
+`view_user`.`logradouro`, 
+`view_user`.`bairro`, 
+`view_user`.`cidade`, 
+`view_user`.`uf`, 
+`view_user`.`cep`, 
+`view_user`.`numero`, 
+`view_user`.`idcontato`, 
+`view_user`.`numero_telefone`, 
+`view_user`.`email`
+FROM `view_user` AS `view_user`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="view_venda" EntityType="Self.view_venda" store:Type="Views" store:Schema="oficina">
+            <DefiningQuery>SELECT
+`view_venda`.`idvenda`, 
+`view_venda`.`cliente_idcliente`, 
+`view_venda`.`funcionario_idfuncionario`, 
+`view_venda`.`valor_total_compra`, 
+`view_venda`.`data_venda`, 
+`view_venda`.`desconto_total`, 
+`view_venda`.`forma_pagamento`, 
+`view_venda`.`tipo_cliente`, 
+`view_venda`.`itemvendido`, 
+`view_venda`.`venda_idvenda`, 
+`view_venda`.`qtd`, 
+`view_venda`.`preco_venda`, 
+`view_venda`.`desconto`, 
+`view_venda`.`codigo_barras`, 
+`view_venda`.`descricao`, 
+`view_venda`.`idcliente`, 
+`view_venda`.`idusuario`, 
+`view_venda`.`divida`
+FROM `view_venda` AS `view_venda`</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="oficinaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="cliente">
+          <Key>
+            <PropertyRef Name="idcliente" />
+            <PropertyRef Name="idusuario" />
+          </Key>
+          <Property Name="idcliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idusuario" Type="Int32" Nullable="false" />
+          <Property Name="divida" Type="Double" />
+        </EntityType>
+        <EntityType Name="contato">
+          <Key>
+            <PropertyRef Name="idcontato" />
+          </Key>
+          <Property Name="idcontato" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idfornecedor" Type="Int32" />
+          <Property Name="idusuario" Type="Int32" />
+          <Property Name="numero_telefone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="endereco">
+          <Key>
+            <PropertyRef Name="idendereco" />
+          </Key>
+          <Property Name="idendereco" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idfornecedor" Type="Int32" />
+          <Property Name="idusuario" Type="Int32" />
+          <Property Name="logradouro" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="bairro" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cidade" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="uf" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="cep" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="numero" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="estoque">
+          <Key>
+            <PropertyRef Name="idestoque" />
+          </Key>
+          <Property Name="idestoque" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="qtd_estoque" Type="Int32" />
+        </EntityType>
+        <EntityType Name="fornecedor">
+          <Key>
+            <PropertyRef Name="idfornecedor" />
+          </Key>
+          <Property Name="idfornecedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CNPJ" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="representante" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="funcionario">
+          <Key>
+            <PropertyRef Name="idfuncionario" />
+            <PropertyRef Name="idusuario" />
+          </Key>
+          <Property Name="idfuncionario" Type="Int32" Nullable="false" />
+          <Property Name="idusuario" Type="Int32" Nullable="false" />
+          <Property Name="login" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="senha" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cargo" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="nivel_acesso" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="itens_vendidos">
+          <Key>
+            <PropertyRef Name="itemvendido" />
+            <PropertyRef Name="venda_idvenda" />
+          </Key>
+          <Property Name="itemvendido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="venda_idvenda" Type="Int32" Nullable="false" />
+          <Property Name="qtd" Type="Int32" />
+          <Property Name="preco_venda" Type="Double" />
+          <Property Name="desconto" Type="Double" />
+          <Property Name="codigo_barras" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="descricao" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="mecanico">
+          <Key>
+            <PropertyRef Name="idmecanico" />
+            <PropertyRef Name="usuario_idusuario" />
+          </Key>
+          <Property Name="idmecanico" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usuario_idusuario" Type="Int32" Nullable="false" />
+          <Property Name="apelido" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="funcao" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="produto">
+          <Key>
+            <PropertyRef Name="idproduto" />
+            <PropertyRef Name="idfornecedor" />
+            <PropertyRef Name="estoque_idestoque" />
+          </Key>
+          <Property Name="idproduto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idfornecedor" Type="Int32" Nullable="false" />
+          <Property Name="estoque_idestoque" Type="Int32" Nullable="false" />
+          <Property Name="estado" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="descricao" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="un" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="descricao_marca" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="codigo" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="codigo_barras" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="valor_custo" Type="Double" />
+          <Property Name="margem_avista" Type="Double" />
+          <Property Name="valor_avista" Type="Double" />
+          <Property Name="margem_prazo" Type="Double" />
+          <Property Name="valor_prazo" Type="Double" />
+          <Property Name="margem_atacado" Type="Double" />
+          <Property Name="valor_atacado" Type="Double" />
+          <Property Name="ultima_atualizacao" Type="DateTime" />
+          <Property Name="data_cadastro" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="servico">
+          <Key>
+            <PropertyRef Name="idservico" />
+          </Key>
+          <Property Name="idservico" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mecanico_idmecanico" Type="Int32" Nullable="false" />
+          <Property Name="descricao" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="valor" Type="Double" />
+          <Property Name="data_servico" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="idusuario" />
+          </Key>
+          <Property Name="idusuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cpf" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="rg" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sexo" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="nascimento" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="data_cadastro" Type="DateTime" />
+          <Property Name="estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="venda">
+          <Key>
+            <PropertyRef Name="idvenda" />
+            <PropertyRef Name="cliente_idcliente" />
+          </Key>
+          <Property Name="idvenda" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cliente_idcliente" Type="Int32" Nullable="false" />
+          <Property Name="funcionario_idfuncionario" Type="Int32" Nullable="false" />
+          <Property Name="valor_total_compra" Type="Double" />
+          <Property Name="data_venda" Type="DateTime" />
+          <Property Name="desconto_total" Type="Double" />
+          <Property Name="forma_pagamento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="tipo_cliente" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="view_itens_venda">
+          <Key>
+            <PropertyRef Name="idvenda" />
+            <PropertyRef Name="cliente_idcliente" />
+            <PropertyRef Name="funcionario_idfuncionario" />
+            <PropertyRef Name="itemvendido" />
+            <PropertyRef Name="venda_idvenda" />
+          </Key>
+          <Property Name="idvenda" Type="Int32" Nullable="false" />
+          <Property Name="cliente_idcliente" Type="Int32" Nullable="false" />
+          <Property Name="funcionario_idfuncionario" Type="Int32" Nullable="false" />
+          <Property Name="valor_total_compra" Type="Double" />
+          <Property Name="data_venda" Type="DateTime" />
+          <Property Name="desconto_total" Type="Double" />
+          <Property Name="forma_pagamento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="tipo_cliente" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="itemvendido" Type="Int32" Nullable="false" />
+          <Property Name="venda_idvenda" Type="Int32" Nullable="false" />
+          <Property Name="qtd" Type="Int32" />
+          <Property Name="preco_venda" Type="Double" />
+          <Property Name="desconto" Type="Double" />
+          <Property Name="codigo_barras" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="descricao" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="view_user">
+          <Key>
+            <PropertyRef Name="idusuario" />
+            <PropertyRef Name="nome" />
+            <PropertyRef Name="cpf" />
+            <PropertyRef Name="rg" />
+            <PropertyRef Name="idendereco" />
+            <PropertyRef Name="logradouro" />
+            <PropertyRef Name="bairro" />
+            <PropertyRef Name="idcontato" />
+          </Key>
+          <Property Name="idusuario" Type="Int32" Nullable="false" />
+          <Property Name="nome" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cpf" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="rg" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sexo" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="nascimento" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="data_cadastro" Type="DateTime" />
+          <Property Name="estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="idendereco" Type="Int32" Nullable="false" />
+          <Property Name="logradouro" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="bairro" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cidade" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="uf" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="cep" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="numero" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="idcontato" Type="Int32" Nullable="false" />
+          <Property Name="numero_telefone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="view_venda">
+          <Key>
+            <PropertyRef Name="idvenda" />
+            <PropertyRef Name="cliente_idcliente" />
+            <PropertyRef Name="funcionario_idfuncionario" />
+            <PropertyRef Name="itemvendido" />
+            <PropertyRef Name="venda_idvenda" />
+            <PropertyRef Name="idcliente" />
+            <PropertyRef Name="idusuario" />
+          </Key>
+          <Property Name="idvenda" Type="Int32" Nullable="false" />
+          <Property Name="cliente_idcliente" Type="Int32" Nullable="false" />
+          <Property Name="funcionario_idfuncionario" Type="Int32" Nullable="false" />
+          <Property Name="valor_total_compra" Type="Double" />
+          <Property Name="data_venda" Type="DateTime" />
+          <Property Name="desconto_total" Type="Double" />
+          <Property Name="forma_pagamento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="tipo_cliente" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="itemvendido" Type="Int32" Nullable="false" />
+          <Property Name="venda_idvenda" Type="Int32" Nullable="false" />
+          <Property Name="qtd" Type="Int32" />
+          <Property Name="preco_venda" Type="Double" />
+          <Property Name="desconto" Type="Double" />
+          <Property Name="codigo_barras" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="descricao" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="idcliente" Type="Int32" Nullable="false" />
+          <Property Name="idusuario" Type="Int32" Nullable="false" />
+          <Property Name="divida" Type="Double" />
+        </EntityType>
+        <EntityContainer Name="oficinaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cliente" EntityType="Self.cliente" />
+          <EntitySet Name="contato" EntityType="Self.contato" />
+          <EntitySet Name="endereco" EntityType="Self.endereco" />
+          <EntitySet Name="estoque" EntityType="Self.estoque" />
+          <EntitySet Name="fornecedor" EntityType="Self.fornecedor" />
+          <EntitySet Name="funcionario" EntityType="Self.funcionario" />
+          <EntitySet Name="itens_vendidos" EntityType="Self.itens_vendidos" />
+          <EntitySet Name="mecanico" EntityType="Self.mecanico" />
+          <EntitySet Name="produto" EntityType="Self.produto" />
+          <EntitySet Name="servico" EntityType="Self.servico" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" />
+          <EntitySet Name="venda" EntityType="Self.venda" />
+          <EntitySet Name="view_itens_venda" EntityType="Self.view_itens_venda" />
+          <EntitySet Name="view_user" EntityType="Self.view_user" />
+          <EntitySet Name="view_venda" EntityType="Self.view_venda" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="oficinaModelStoreContainer" CdmEntityContainer="oficinaEntities">
+          <EntitySetMapping Name="cliente">
+            <EntityTypeMapping TypeName="oficinaModel.cliente">
+              <MappingFragment StoreEntitySet="cliente">
+                <ScalarProperty Name="idcliente" ColumnName="idcliente" />
+                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
+                <ScalarProperty Name="divida" ColumnName="divida" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="contato">
+            <EntityTypeMapping TypeName="oficinaModel.contato">
+              <MappingFragment StoreEntitySet="contato">
+                <ScalarProperty Name="idcontato" ColumnName="idcontato" />
+                <ScalarProperty Name="idfornecedor" ColumnName="idfornecedor" />
+                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
+                <ScalarProperty Name="numero_telefone" ColumnName="numero_telefone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="endereco">
+            <EntityTypeMapping TypeName="oficinaModel.endereco">
+              <MappingFragment StoreEntitySet="endereco">
+                <ScalarProperty Name="idendereco" ColumnName="idendereco" />
+                <ScalarProperty Name="idfornecedor" ColumnName="idfornecedor" />
+                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
+                <ScalarProperty Name="logradouro" ColumnName="logradouro" />
+                <ScalarProperty Name="bairro" ColumnName="bairro" />
+                <ScalarProperty Name="cidade" ColumnName="cidade" />
+                <ScalarProperty Name="uf" ColumnName="uf" />
+                <ScalarProperty Name="cep" ColumnName="cep" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="estoque">
+            <EntityTypeMapping TypeName="oficinaModel.estoque">
+              <MappingFragment StoreEntitySet="estoque">
+                <ScalarProperty Name="idestoque" ColumnName="idestoque" />
+                <ScalarProperty Name="qtd_estoque" ColumnName="qtd_estoque" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fornecedor">
+            <EntityTypeMapping TypeName="oficinaModel.fornecedor">
+              <MappingFragment StoreEntitySet="fornecedor">
+                <ScalarProperty Name="idfornecedor" ColumnName="idfornecedor" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="CNPJ" ColumnName="CNPJ" />
+                <ScalarProperty Name="representante" ColumnName="representante" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="funcionario">
+            <EntityTypeMapping TypeName="oficinaModel.funcionario">
+              <MappingFragment StoreEntitySet="funcionario">
+                <ScalarProperty Name="idfuncionario" ColumnName="idfuncionario" />
+                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="senha" ColumnName="senha" />
+                <ScalarProperty Name="cargo" ColumnName="cargo" />
+                <ScalarProperty Name="nivel_acesso" ColumnName="nivel_acesso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="itens_vendidos">
+            <EntityTypeMapping TypeName="oficinaModel.itens_vendidos">
+              <MappingFragment StoreEntitySet="itens_vendidos">
+                <ScalarProperty Name="itemvendido" ColumnName="itemvendido" />
+                <ScalarProperty Name="venda_idvenda" ColumnName="venda_idvenda" />
+                <ScalarProperty Name="qtd" ColumnName="qtd" />
+                <ScalarProperty Name="preco_venda" ColumnName="preco_venda" />
+                <ScalarProperty Name="desconto" ColumnName="desconto" />
+                <ScalarProperty Name="codigo_barras" ColumnName="codigo_barras" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mecanico">
+            <EntityTypeMapping TypeName="oficinaModel.mecanico">
+              <MappingFragment StoreEntitySet="mecanico">
+                <ScalarProperty Name="idmecanico" ColumnName="idmecanico" />
+                <ScalarProperty Name="usuario_idusuario" ColumnName="usuario_idusuario" />
+                <ScalarProperty Name="apelido" ColumnName="apelido" />
+                <ScalarProperty Name="funcao" ColumnName="funcao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="produto">
+            <EntityTypeMapping TypeName="oficinaModel.produto">
+              <MappingFragment StoreEntitySet="produto">
+                <ScalarProperty Name="idproduto" ColumnName="idproduto" />
+                <ScalarProperty Name="idfornecedor" ColumnName="idfornecedor" />
+                <ScalarProperty Name="estoque_idestoque" ColumnName="estoque_idestoque" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+                <ScalarProperty Name="un" ColumnName="un" />
+                <ScalarProperty Name="descricao_marca" ColumnName="descricao_marca" />
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="codigo_barras" ColumnName="codigo_barras" />
+                <ScalarProperty Name="valor_custo" ColumnName="valor_custo" />
+                <ScalarProperty Name="margem_avista" ColumnName="margem_avista" />
+                <ScalarProperty Name="valor_avista" ColumnName="valor_avista" />
+                <ScalarProperty Name="margem_prazo" ColumnName="margem_prazo" />
+                <ScalarProperty Name="valor_prazo" ColumnName="valor_prazo" />
+                <ScalarProperty Name="margem_atacado" ColumnName="margem_atacado" />
+                <ScalarProperty Name="valor_atacado" ColumnName="valor_atacado" />
+                <ScalarProperty Name="ultima_atualizacao" ColumnName="ultima_atualizacao" />
+                <ScalarProperty Name="data_cadastro" ColumnName="data_cadastro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="servico">
+            <EntityTypeMapping TypeName="oficinaModel.servico">
+              <MappingFragment StoreEntitySet="servico">
+                <ScalarProperty Name="idservico" ColumnName="idservico" />
+                <ScalarProperty Name="mecanico_idmecanico" ColumnName="mecanico_idmecanico" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+                <ScalarProperty Name="valor" ColumnName="valor" />
+                <ScalarProperty Name="data_servico" ColumnName="data_servico" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario">
+            <EntityTypeMapping TypeName="oficinaModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="cpf" ColumnName="cpf" />
+                <ScalarProperty Name="rg" ColumnName="rg" />
+                <ScalarProperty Name="sexo" ColumnName="sexo" />
+                <ScalarProperty Name="nascimento" ColumnName="nascimento" />
+                <ScalarProperty Name="data_cadastro" ColumnName="data_cadastro" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="venda">
+            <EntityTypeMapping TypeName="oficinaModel.venda">
+              <MappingFragment StoreEntitySet="venda">
+                <ScalarProperty Name="idvenda" ColumnName="idvenda" />
+                <ScalarProperty Name="cliente_idcliente" ColumnName="cliente_idcliente" />
+                <ScalarProperty Name="funcionario_idfuncionario" ColumnName="funcionario_idfuncionario" />
+                <ScalarProperty Name="valor_total_compra" ColumnName="valor_total_compra" />
+                <ScalarProperty Name="data_venda" ColumnName="data_venda" />
+                <ScalarProperty Name="desconto_total" ColumnName="desconto_total" />
+                <ScalarProperty Name="forma_pagamento" ColumnName="forma_pagamento" />
+                <ScalarProperty Name="tipo_cliente" ColumnName="tipo_cliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="view_itens_venda">
+            <EntityTypeMapping TypeName="oficinaModel.view_itens_venda">
+              <MappingFragment StoreEntitySet="view_itens_venda">
+                <ScalarProperty Name="idvenda" ColumnName="idvenda" />
+                <ScalarProperty Name="cliente_idcliente" ColumnName="cliente_idcliente" />
+                <ScalarProperty Name="funcionario_idfuncionario" ColumnName="funcionario_idfuncionario" />
+                <ScalarProperty Name="valor_total_compra" ColumnName="valor_total_compra" />
+                <ScalarProperty Name="data_venda" ColumnName="data_venda" />
+                <ScalarProperty Name="desconto_total" ColumnName="desconto_total" />
+                <ScalarProperty Name="forma_pagamento" ColumnName="forma_pagamento" />
+                <ScalarProperty Name="tipo_cliente" ColumnName="tipo_cliente" />
+                <ScalarProperty Name="itemvendido" ColumnName="itemvendido" />
+                <ScalarProperty Name="venda_idvenda" ColumnName="venda_idvenda" />
+                <ScalarProperty Name="qtd" ColumnName="qtd" />
+                <ScalarProperty Name="preco_venda" ColumnName="preco_venda" />
+                <ScalarProperty Name="desconto" ColumnName="desconto" />
+                <ScalarProperty Name="codigo_barras" ColumnName="codigo_barras" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="view_user">
+            <EntityTypeMapping TypeName="oficinaModel.view_user">
+              <MappingFragment StoreEntitySet="view_user">
+                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="cpf" ColumnName="cpf" />
+                <ScalarProperty Name="rg" ColumnName="rg" />
+                <ScalarProperty Name="sexo" ColumnName="sexo" />
+                <ScalarProperty Name="nascimento" ColumnName="nascimento" />
+                <ScalarProperty Name="data_cadastro" ColumnName="data_cadastro" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="idendereco" ColumnName="idendereco" />
+                <ScalarProperty Name="logradouro" ColumnName="logradouro" />
+                <ScalarProperty Name="bairro" ColumnName="bairro" />
+                <ScalarProperty Name="cidade" ColumnName="cidade" />
+                <ScalarProperty Name="uf" ColumnName="uf" />
+                <ScalarProperty Name="cep" ColumnName="cep" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="idcontato" ColumnName="idcontato" />
+                <ScalarProperty Name="numero_telefone" ColumnName="numero_telefone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="view_venda">
+            <EntityTypeMapping TypeName="oficinaModel.view_venda">
+              <MappingFragment StoreEntitySet="view_venda">
+                <ScalarProperty Name="idvenda" ColumnName="idvenda" />
+                <ScalarProperty Name="cliente_idcliente" ColumnName="cliente_idcliente" />
+                <ScalarProperty Name="funcionario_idfuncionario" ColumnName="funcionario_idfuncionario" />
+                <ScalarProperty Name="valor_total_compra" ColumnName="valor_total_compra" />
+                <ScalarProperty Name="data_venda" ColumnName="data_venda" />
+                <ScalarProperty Name="desconto_total" ColumnName="desconto_total" />
+                <ScalarProperty Name="forma_pagamento" ColumnName="forma_pagamento" />
+                <ScalarProperty Name="tipo_cliente" ColumnName="tipo_cliente" />
+                <ScalarProperty Name="itemvendido" ColumnName="itemvendido" />
+                <ScalarProperty Name="venda_idvenda" ColumnName="venda_idvenda" />
+                <ScalarProperty Name="qtd" ColumnName="qtd" />
+                <ScalarProperty Name="preco_venda" ColumnName="preco_venda" />
+                <ScalarProperty Name="desconto" ColumnName="desconto" />
+                <ScalarProperty Name="codigo_barras" ColumnName="codigo_barras" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+                <ScalarProperty Name="idcliente" ColumnName="idcliente" />
+                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
+                <ScalarProperty Name="divida" ColumnName="divida" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
